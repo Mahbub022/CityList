@@ -27,9 +27,34 @@ public class CityList {
      * @return
      *      Return the sorted list of cities
      */
-    public List<City> getCities() {
+    public List<City> getCities(int sort) {
         List<City> cityList = cities;
-        Collections.sort(cityList);
+
+        if(sort == 1){
+            /** Sort by City name */
+            Collections.sort(cityList);
+        }
+        else
+        {
+            /** Sort by Province name */
+            Collections.sort(cityList, new SortByProvince());
+        }
         return cityList;
+    }
+
+    /** This is to delete city */
+    public void delete(City city)
+    {
+
+        if(!cities.contains(city)){
+            throw new IllegalArgumentException();
+        }
+        cities.remove(city);
+    }
+
+    /** this is to count city in the list */
+    public int count()
+    {
+        return cities.size();
     }
 }

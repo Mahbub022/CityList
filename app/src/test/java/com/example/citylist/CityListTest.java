@@ -18,13 +18,13 @@ public class CityListTest {
     @Test
     public void testAdd() {
         CityList cityList = mockCityList();
-        assertEquals(1, cityList.getCities().size());
+        assertEquals(1, cityList.getCities(1).size());
 
         City city = new City("Regina", "SK");
         cityList.add(city);
 
-        assertEquals(2, cityList.getCities().size());
-        assertTrue(cityList.getCities().contains(city));
+        assertEquals(2, cityList.getCities(1).size());
+        assertTrue(cityList.getCities(1).contains(city));
     }
 
     @Test
@@ -38,15 +38,59 @@ public class CityListTest {
         });
     }
 
+    /** Delete test */
+    @Test
+    public void testDelete(){
+        CityList cityList = new CityList();
+        City city = mockCity();
+        City city1 = new City("Jossore","Khulna");
+        cityList.add(city);
+        cityList.add(city1);
+        cityList.delete(city);
+
+        assertTrue(!cityList.getCities(1).contains(city));
+    }
+
+    @Test
+    public void testDeleteException(){
+        CityList cityList = new CityList();
+        City city = mockCity();
+        City city1 = new City("Jossore","Khulna");
+        cityList.add(city);
+        cityList.add(city1);
+        cityList.delete(city);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+           cityList.delete(city);
+        });
+    }
+
     @Test
     public void testGetCities() {
         CityList cityList = mockCityList();
-        assertEquals(0, mockCity().compareTo(cityList.getCities().get(0)));
+        assertEquals(0, mockCity().compareTo(cityList.getCities(1).get(0)));
 
         City city = new City("Charlottetown", "Prince Edward Island");
         cityList.add(city);
 
-        assertEquals(0, city.compareTo(cityList.getCities().get(0)));
-        assertEquals(0, mockCity().compareTo(cityList.getCities().get(1)));
+        assertEquals(0, city.compareTo(cityList.getCities(1).get(0)));
+        assertEquals(0, mockCity().compareTo(cityList.getCities(1).get(1)));
+
+/** Sort list by province name */
+        assertEquals(0,city.compareTo(cityList.getCities(0).get(1)));
+    }
+
+    /** Count Test of the cities in the list*/
+    @Test
+    public void testCount(){
+        CityList cityList = new CityList();
+        City city = mockCity();
+        City city1 = new City("Jossore","Khulna");
+        City city2 = new City("Gazipur","Dhaka");
+        cityList.add(city);
+        cityList.add(city1);
+        cityList.add(city2);
+
+        assertEquals(3,cityList.getCities(1).size());
     }
 }

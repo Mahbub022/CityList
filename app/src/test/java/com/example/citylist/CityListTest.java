@@ -91,6 +91,6 @@ public class CityListTest {
         cityList.add(city1);
         cityList.add(city2);
 
-        assertEquals(3,cityList.getCities(1).size());
+        assertEquals(3,cityList.count());
     }
 }

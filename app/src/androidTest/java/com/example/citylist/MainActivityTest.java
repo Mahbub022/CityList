@@ -76,4 +76,17 @@ public class MainActivityTest {
         Espresso.pressBack(); //Back button
     }
 
+    @Test
+    public void switchTest()
+    {
+        onView(withId(R.id.button_add)).perform(click()); //Click add button to add a city to the list
+        onView(withId(R.id.editText_name)).perform(ViewActions.typeText("Edmonton")); //Type a city name
+        onData(anything()).inAdapterView(withId(R.id.city_list)).atPosition(0).perform(click());
+
+        onView(withId(R.id.show)).check(matches(isDisplayed()));
+        onView(withText("Edmonton")).check(matches(isDisplayed()));
+        onView(withId(R.id.backButton)).perform(click());
+        onView(withId(R.id.main)).check(matches(isDisplayed()));
+    }
+
 }
